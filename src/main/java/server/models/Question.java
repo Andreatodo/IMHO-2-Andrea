@@ -55,6 +55,10 @@ public class Question {
         this.options.add(option);
     }
 
+    public void setAllOptions(ArrayList<Option> options){
+        this.options = options;
+    }
+
     public String getOption() {
         return option;
     }

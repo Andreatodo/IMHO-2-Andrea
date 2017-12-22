@@ -1,0 +1,100 @@
+<HTML>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Course</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="startSide.html">DØK Eksamens Quiz</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li id="userInfo"></li>
+                <li><a href="logout.html">Logud</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="Wrapper1 col-md-3" style="border-right: 1px solid #ccc">
+    <ul id="courses">
+    </ul>
+</div>
+
+
+<div class="content col-md-9">
+<table id="quizTable">
+    <tr>
+        <td><b>Quiznavn</b></td>
+    </tr>
+</table>
+    <a href="opretQuiz.html" id="createQuizLink" style="display:none">Opret quiz</a>
+
+
+</div>
+<script src="lib/js/listCourses.js"></script>
+<script src="lib/js/listQuizzes.js"></script>
+<script>
+    $(document).ready(function(){
+        if(localStorage.getItem("type") === "1"){
+            $("#createQuizLink").show();
+        }
+        var typeText = localStorage.getItem("type") === "1" ? "Admin" : "Studerende";
+        $("#userInfo").text("Brugernavn: " + localStorage.getItem("username") + " Brugertype: " + typeText )
+    });
+    $(document).on("click", ".removeQuiz", function(){
+        var parentElement = $(this).parent().parent();
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:8080/api/quiz/' + parentElement.attr("data-id"),
+            //whatever you need
+            headers: {"Authorization": localStorage.getItem("token")},
+            success: function (data, textStatus, jqXHR) {
+                console.log("Quiz deleted");
+                parentElement.remove();
+            }
+        });
+    });
+    $(document).on("click", ".editQuiz", function(){
+        localStorage.setItem("quizID", $(this).parent().parent().attr("data-id"));
+        localStorage.setItem("quizName", $(this).parent().parent().attr("data-name"));
+        window.location.href = "redigerQuiz.html";
+    });
+
+    $(document).on("click", ".takeQuiz", function(){
+        localStorage.setItem("quizID", $(this).parent().parent().attr("data-id"));
+        localStorage.setItem("quizName", $(this).parent().parent().attr("data-name"));
+        window.location.href = "quiz.html";
+    });
+
+</script>
+</body>
+</HTML>

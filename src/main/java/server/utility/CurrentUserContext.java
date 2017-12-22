@@ -16,10 +16,6 @@ public class CurrentUserContext {
     }
 
     public Boolean isAdmin() {
-        if(this.currentUser.getType() == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.currentUser.getType() == 1;
     }
 }

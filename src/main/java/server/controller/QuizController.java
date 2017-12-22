@@ -63,6 +63,9 @@ public class QuizController {
     public ArrayList<Question> loadQuestions(int quizId) {
         DbManager dbManager = new DbManager();
         ArrayList<Question> question = dbManager.loadQuestions(quizId);
+        for (Question q : question) {
+            q.setAllOptions(dbManager.loadOptions(q.getQuestionId()));
+        }
 
         if(!question.isEmpty()) {
             return question;

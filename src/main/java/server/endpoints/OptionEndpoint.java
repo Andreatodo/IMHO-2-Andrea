@@ -68,7 +68,7 @@ public class OptionEndpoint {
             }
         } else {
             Globals.log.writeLog(this.getClass().getName(), this, "Unauthorized - create option", 2);
-            return Response.status(500).type("text/plain").entity("Unauthorized").build();
+            return Response.status(401).type("text/plain").entity("Unauthorized").build();
         }
     }
 

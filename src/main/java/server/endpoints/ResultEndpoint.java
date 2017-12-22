@@ -25,7 +25,7 @@ public class ResultEndpoint {
 
 
     @GET
-    //send totale number of correct answer and questions back to the user.
+    //send total number of correct answers and questions back to the user.
     @Path("{QuizId}/{UserId}")
     public Response getUserScore(@HeaderParam("authorization") String token, @PathParam("QuizId") int QuizId, @PathParam("UserId") int UserId) throws SQLException {
         CurrentUserContext currentUser = tokenController.getUserFromTokens(token);

@@ -24,7 +24,7 @@ public class UserEndpoint {
     @Path("/login")
     //Endpoint for authorizing a user
     public Response logIn(String user) {
-        User authorizedUser = mainController.authUser(new Gson().fromJson(user, User.class));
+        String authorizedUser = mainController.authUser(new Gson().fromJson(user, User.class));
         String myUser = new Gson().toJson(authorizedUser);
         myUser = crypter.encryptAndDecryptXor(myUser);
 
